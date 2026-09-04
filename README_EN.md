@@ -1,0 +1,99 @@
+<div align="center">
+
+<img src="docs/public/huaweipods-logo.png" width="120" height="120" style="border-radius: 24px;" alt="HuaweiPods Icon"/>
+
+# HuaweiPods ColorOS
+
+**Independently packaged HuaweiPods build with ColorOS integration**
+
+[![Platform](https://img.shields.io/badge/Platform-Android-green?style=flat-square&logo=android)](https://android.com)
+[![LSPosed](https://img.shields.io/badge/Framework-LSPosed-blueviolet?style=flat-square)](https://github.com/LSPosed/LSPosed)
+[![HyperOS](https://img.shields.io/badge/ROM-HyperOS-orange?style=flat-square)](https://hyperos.mi.com)
+
+**English** | **[Simplified Chinese](README.md)**
+
+[Releases](https://github.com/Artifical0/HuaweiPods-ColorOS/releases) · [Documentation](https://huaweipods.npiter.de/) · [Support the project](docs/sponsor/index.md) · [Report an issue](https://github.com/Artifical0/HuaweiPods-ColorOS/issues)
+
+</div>
+
+HuaweiPods ColorOS is an Android 15+ Xposed module with the independent application ID `io.github.artifical0.huaweipods.coloros`, so the original HuaweiPods LSPosed marketplace entry cannot replace it. HyperOS integration includes the system headset popup, Super Island, Fusion Device Center, and Bluetooth detail page. ColorOS integration includes the official Quick Device Connect popup, the My Devices headset-detail entry, and an Android 16 Live Alert / Fluid Cloud battery card.
+
+> The My Devices entry was verified against OnePlus PLK110 (ColorOS 16.1, `com.heytap.mydevices` 17.4.15). This is not yet a complete ColorOS system panel; private hosts change between system updates, so other builds may fall back to the module UI and standard Bluetooth detail page.
+
+The unified build supports the 14 models below in one APK. Model-specific test APKs are no longer distributed.
+
+## Supported models
+
+| Model | Status | Integrated capabilities |
+| --- | --- | --- |
+| HUAWEI FreeBuds 3 | Stable | Battery, ANC on/off, nine-position spatial ANC dial, double-tap gestures, and system UI integration |
+| HUAWEI FreeBuds 4E | Extended support | Battery, ANC/off with Light/Balanced levels and readback, left/right double-tap and press-and-hold, wear detection, fixed swipe-volume guidance, three official sound presets, and official color images |
+| HUAWEI FreeBuds 5 | Extended support | Battery, ANC/off readback, Smart/Light/Balanced ANC levels, wear detection, four official sound presets, high-quality audio and low-latency auto-apply; gesture settings remain pending |
+| HUAWEI FreeBuds 5i | Extended support | Battery, transparency/ANC/off readback, Smart/Light/Balanced/Deep ANC levels, left/right double-tap, wear detection, four official sound presets, high-quality audio, low-latency auto-apply, and official color images; long-press and swipe settings remain pending |
+| HUAWEI FreeBuds 6i | Extended support | Battery, transparency/ANC/off, four ANC levels, voice transparency, double/triple-tap gestures, four official sound presets, a 10-band custom EQ, low-latency auto-apply, and dedicated images |
+| HUAWEI FreeBuds Pro 3 | Extended support | Battery, three-mode control and readback, four ANC levels, voice transparency, long-press/pinch/swipe gestures, and low-latency auto-apply |
+| HUAWEI FreeBuds Pro 4 | Basic support | Battery and ANC/off; no verified ANC state readback or gesture settings |
+| HUAWEI FreeBuds Pro 5 | Basic support | Battery, transparency/ANC/off, state readback, and low-latency auto-apply; ANC levels and gestures remain pending |
+| HUAWEI FreeBuds 7i | Extended support | Battery, transparency/ANC/off readback, four ANC levels, double/triple-tap, long-press and swipe-volume gestures, wear detection, head-motion control, spatial audio, four sound presets, a 10-band custom EQ, high-quality audio, low-latency auto-apply, dual-device list management, and official color images |
+| HUAWEI FreeClip | Extended support | Left/right/case battery, double/triple-tap gestures, wear detection, adaptive left/right earbuds, drop reminder, four official sound presets, and low-latency auto-apply; no traditional ANC or custom EQ |
+| HUAWEI FreeClip 2 | Extended support | Battery, double/triple-tap and swipe gestures, spatial audio, low-latency auto-apply, and selected wearing/audio settings; no traditional ANC |
+| HUAWEI FreeArc | Extended support | Left/right/case battery, double/triple-tap, press-and-hold and swipe gestures, five official sound presets, a 10-band custom EQ, and official color images; no traditional ANC |
+| HUAWEI Eyewear (1st generation) | Basic support | Left/right temple battery and system UI integration; no ANC |
+| HUAWEI Eyewear 2 | Basic support | Left/right temple battery, double-tap/swipe gestures, and low-latency auto-apply; no ANC |
+
+“Stable” means the model has received substantial device testing. “Extended support” includes additional protocol controls, while “Basic support” covers identification, battery, or core controls. Models not marked stable still benefit from real-device regression testing, and unlisted official features should not be assumed to work.
+
+## Features
+
+- **Battery display** for earbuds, charging cases, or the left/right temples of supported eyewear.
+- **Model-aware controls** for ANC, transparency, ANC levels, and gestures where verified protocol data is available.
+- **ANC dial** for FreeBuds 3 spatial noise cancellation adjustment only.
+- **System Bluetooth detail page** integration for battery and controls supported by the selected model.
+- **Super Island / popup** status display and quick ANC controls.
+- **ColorOS Quick Device Connect and Fluid Cloud** with left, right, and case battery levels on Android 16+.
+- Independent switches for lock-screen headset notifications and all Super Island notifications.
+- Notification taps can open the module popup, system settings, or Huawei Smart Audio; verified models can toggle low latency in the popup.
+- **Fusion Device Center** headset display and transfer between paired devices, with an optional low-latency quick card on supported models.
+- **Manual model binding** by Bluetooth address when a device has been renamed or cannot be identified automatically.
+- **First-run setup guide** and in-app GitHub release checks.
+- **Post-update scope restart prompt** after installing a newer APK.
+- **Official model images** downloaded from Huawei's CDN after modern devices report an exact model and color identity over Bluetooth; manual and built-in images remain available as fallbacks.
+
+## Requirements
+
+- Xiaomi / Redmi HyperOS or OPPO / OnePlus / realme ColorOS device.
+- Android 15+.
+- LSPosed API version >= 101.
+- A paired device listed in the support table above.
+
+## Usage
+
+1. Install the HuaweiPods APK and follow the first-run guide to check LSPosed and the core scopes.
+2. Enable the module in LSPosed.
+3. Select the scopes for your system:
+   - ColorOS: `com.android.bluetooth`, `com.heytap.mydevices`, and `com.heytap.accessory` (`com.heytap.accessory` enables the system Quick Device Connect popup; `com.android.settings` is optional for the standard Bluetooth detail page).
+   - Full HyperOS integration: `com.android.bluetooth`, `com.android.settings`, `com.milink.service`, and `com.xiaomi.bluetooth`.
+4. Reboot the phone, or restart the scoped apps from HuaweiPods.
+5. On ColorOS 16+, open **ColorOS Fluid Cloud** in HuaweiPods settings and enable **Live alerts** in the system notification settings.
+6. Connect a supported device and view its capabilities in HuaweiPods. HyperOS also provides Super Island, Fusion Device Center, and the integrated system Bluetooth page. Modern models are identified from their protocol identity; if a renamed or legacy device is not identified, select its actual model once in HuaweiPods.
+
+The release build no longer needs to install, run, or hook HUAWEI AI Life Audio for official images. Modern models provide the model and color identity over Bluetooth; legacy models can browse the verified Huawei color catalog in the image settings and ask the user to confirm once. Failures always fall back to cached or bundled images and never guess the default color.
+
+The Fusion Device Center low-latency card can be disabled in HuaweiPods settings. Because the verified protocol has no reliable readback for this setting, the UI shows the last successful write that will be reapplied after reconnection rather than a live device-reported state.
+
+## Development Notes
+
+Internal package names, broadcast actions, configuration names, and the public app identity are unified as HuaweiPods.
+
+## Credits
+
+- [HuaweiPods](https://github.com/Nshpiter/HuaweiPods) by Nshpiter — direct upstream of this adaptation.
+- [OppoPods](https://github.com/1812z/OppoPods) by 1812z — the fork HuaweiPods was directly adapted from.
+- [OppoPods](https://github.com/Leaf-lsgtky/OppoPods) by Leaf-lsgtky — the original upstream OppoPods project.
+- [HyperPods](https://github.com/Art-Chen/HyperPods) by Art_Chen — original HyperOS headset integration ideas.
+- [HyperIsland](https://github.com/1812z/HyperIsland) by 1812z — interaction reference for update checks and onboarding.
+- [Miuix](https://github.com/YuKongA/miuix) — HyperOS-style Compose UI components.
+
+## License
+
+[GPL-3.0](LICENSE)
