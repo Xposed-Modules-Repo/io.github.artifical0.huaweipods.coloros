@@ -7,26 +7,75 @@
 **独立应用 ID 的 HuaweiPods ColorOS 适配版**
 
 [![Android 15+](https://img.shields.io/badge/Android-15%2B-3DDC84?style=flat-square&logo=android&logoColor=white)](https://www.android.com/)
-[![HyperOS](https://img.shields.io/badge/ROM-HyperOS-FF6900?style=flat-square)](https://hyperos.mi.com/)
+[![ColorOS](https://img.shields.io/badge/ROM-ColorOS-1BA784?style=flat-square)](https://www.coloros.com/)
 [![LSPosed](https://img.shields.io/badge/Framework-LSPosed-6F42C1?style=flat-square)](https://github.com/LSPosed/LSPosed)
 [![License](https://img.shields.io/github/license/Artifical0/HuaweiPods-ColorOS?style=flat-square)](LICENSE)
 
 [下载安装](https://github.com/Artifical0/HuaweiPods-ColorOS/releases) ·
 [使用文档](https://huaweipods.npiter.de/) ·
-[赞助支持](https://github.com/Artifical0/HuaweiPods-ColorOS/blob/main/docs/sponsor/index.md) ·
+[赞助支持](https://github.com/Artifical0/HuaweiPods-ColorOS/blob/5a72ab50479207c0ff8b087d460f5cdd9c4d36d7/docs/sponsor/index.md) ·
 [问题反馈](https://github.com/Artifical0/HuaweiPods-ColorOS/issues)
 
 **简体中文** · **[English](README_EN.md)**
 
 </div>
 
-HuaweiPods ColorOS 是一个使用独立应用 ID `io.github.artifical0.huaweipods.coloros` 的 Android 15+ Xposed 模块，不会被原版 HuaweiPods 的 LSPosed 商店条目覆盖更新。ColorOS 已接入官方“快速设备连接”弹窗、“我的设备”耳机详情入口、系统耳机电量通道及 Android 16+ 流体云电量卡片；HyperOS 保留上游的系统蓝牙详情页、连接弹窗、超级岛与融合设备中心集成。
+HuaweiPods ColorOS 是一个使用独立应用 ID `io.github.artifical0.huaweipods.coloros` 的 Android 15+ Xposed 模块，不会被原版 HuaweiPods 的 LSPosed 商店条目覆盖更新。ColorOS 已接入官方“快速设备连接”弹窗、“我的设备”耳机详情入口、系统耳机电量通道及 Android 16+ 流体云电量卡片。
+
+> 从 1.9.0.1 起本分支只适配 ColorOS，已移除上游的小米 / HyperOS 集成（系统蓝牙详情页、超级岛、融合设备中心等）。HyperOS 用户请使用上游 [HuaweiPods](https://github.com/Nshpiter/HuaweiPods)。
 
 > ColorOS 说明：“我的设备”入口已适配 ColorOS 16.1（`com.heytap.mydevices` 17.4.15）与 ColorOS 17（17.25.10）两代详情页。ColorOS 17 部分目前依据 OnePlus PLK110 `PLK110_17.0.0.102(CN01)` 固件静态核对，尚待实机验证。私有宿主会随系统更新变化，未知版本会退回系统原样，仍保留模块内电量、流体云和通用蓝牙详情页。
 
 连接手机并启用 USB 调试后，可在 Windows PowerShell 运行 `./tools/capture-coloros-environment.ps1`，生成不含日志、账号和蓝牙地址的宿主环境包，供下一阶段适配使用。
 
-> 当前统一版已集成下列 16 个型号，所有型号使用同一个 APK，不再按型号单独分发测试包。
+> 下列机型共用一个 APK，不按型号单独分发。新增型号的 ColorOS 实机验证范围请分别查看。
+
+## 1.9.1.1（当前稳定版）
+
+- 新增 FreeBuds 6 型号识别、官方图片身份、电量、三档降噪及独立设置页，不复用 6i 的通透或音效编号。
+- 识别 FreeClip 2 典藏版产品 `000173`，与普通版 `000167` 官方图片身份隔离；未获取官方图时仅显示系列示意图。FreeClip 2 系列新增点头 / 摇头来电动作及“嘈杂环境大音量”设置和回读，纠正原“声音质量优先”的命名。
+- 6i / SE 4 ANC 音效、防风噪及通用低时延操作复用蓝牙宿主连接；手动设置使旧自动开启和旧回调失效。共用控制请求仅允许本应用发起，最多 32 个待处理请求、8 秒超时。
+- 保留 RC3 的一代 FreeClip 能力、图片、双 Profile 会话、后台唤醒和身份校验。不带回 HyperOS 私有界面，未导入缺少回读证据的 SE 4 ANC 智慧动态档位。
+- 新增型号仅完成源码 / 协议层接入，尚未在本机 ColorOS 与对应耳机实测；详见 [上游 FreeBuds 6 验证范围](https://github.com/Nshpiter/HuaweiPods/blob/1f013d204c590fd3b3d5eaa687e08d9342e6fa59/docs/FREEBUDS6_ADAPTATION.md) 和 [典藏版协议依据](https://github.com/Nshpiter/HuaweiPods/blob/1f013d204c590fd3b3d5eaa687e08d9342e6fa59/docs/FREECLIP2_COLLECTOR_ADAPTATION.md)。
+- 577 项单元测试通过（0 失败 / 0 错误），Lint 无错误，Release 构建及设备测试代码编译通过；本轮无设备连接，未安装或重启。发布包使用原有固定签名，versionCode 27，不使用本地 Debug 签名包分发。
+- 发布于 GitHub 与独立 [LSPosed 模块仓库](https://github.com/Xposed-Modules-Repo/io.github.artifical0.huaweipods.coloros/releases) 的稳定版频道。新增型号的 ColorOS 实机验证尚未完成；欢迎反馈系统版本、耳机型号、操作步骤和脱敏日志，详见 [发布说明与验证限制](https://github.com/Artifical0/HuaweiPods-ColorOS/blob/5a72ab50479207c0ff8b087d460f5cdd9c4d36d7/.github/release-notes/1.9.1.1.md)。
+
+## 1.9.0.2-rc3（前一测试候选）
+
+- 选择性移植上游 `59d5fa8`：RFCOMM 音频服务过滤、A2DP 精确回调签名与备用方法名、蓝牙别名展示和改名刷新。
+- 保留 ColorOS 双 Profile 会话、唤醒、图片和流体云链路，不带回 HyperOS 私有集成；详见 [移植范围与验证边界](https://github.com/Artifical0/HuaweiPods-ColorOS/blob/5a72ab50479207c0ff8b087d460f5cdd9c4d36d7/docs/upstream-selective-port-20261016.md)。
+- 551 项单元测试通过，Lint 无错误，Release 构建及设备测试代码编译通过；本轮未做实机验证。使用原有固定发布签名，versionCode 26，作为 Pre-release 发布、不设为正式 Latest。详见 [RC3 发布说明](https://github.com/Artifical0/HuaweiPods-ColorOS/blob/5a72ab50479207c0ff8b087d460f5cdd9c4d36d7/.github/release-notes/1.9.0.2-rc3.md)。
+
+## 1.9.0.2-rc2（前一测试候选）
+
+- 包含下述双 Profile 会话及有界重试修复，并补齐热重载时未确认事件的交接。
+- 恢复时核对实际音频连接，已全断开则清理旧快照，未知状态不误清理；尚未读到电量的 HFP-only 会话也保留地址。
+- 交接只使用基础类型，旧模块 Parcelable / ClassLoader 不传入新代；用户手动强行停止的应用不会被绑定通道绕过。
+- 530 项单元测试、Lint、Release 构建及设备测试代码编译通过。新增逻辑本轮无实机验证，详见 [RC2 发布说明](https://github.com/Artifical0/HuaweiPods-ColorOS/blob/5a72ab50479207c0ff8b087d460f5cdd9c4d36d7/.github/release-notes/1.9.0.2-rc2.md)。
+
+## 1.9.0.2-rc1（前一测试候选）
+
+- **媒体 / 通话连接统一处理**：同一耳机的 A2DP 或 HFP 任一仍连接就保留协议会话、控制能力和电量刷新；两个音频连接均明确断开才结束会话。未知连接状态、其他设备断开、设备切换及迟到查询不会误清理当前会话。
+- **唤醒通道故障恢复**：增加最多 5 次退避重试与处理完成回执；绑定 / Binder / 应用重启失败时保留待处理状态，合并重复电量事件，隔离传输代次与模块代次。超过重试预算等待新的状态事件，不无限拉起应用。
+- **流体云防残留**：延续 ColorOS 冻结兜底，蓝牙进程通过校验调用 UID 的短同步服务入口递交状态；断连清理确认完成才解除绑定。迟到事件按本次开机的时间顺序过滤。
+- 纳入上一轮通知开关即时生效、佩戴检测读取失败结束等待、跨进程状态校验、旧模块版本与真实超时分别显示、ColorOS 16 缺失私有电量接口安全回退等修复。
+- **验证范围**：上一轮候选在 OPPO Pad Mini / ColorOS 16 / FreeClip 已实测后台开盒出现流体云、关盖清理、图片恢复；本 RC 新增的单 Profile 场景和故障恢复逻辑通过回归测试，本轮无 Android 设备连接，尚未实机验证。详见 [测试版说明](https://github.com/Artifical0/HuaweiPods-ColorOS/blob/5a72ab50479207c0ff8b087d460f5cdd9c4d36d7/.github/release-notes/1.9.0.2-rc1.md)。
+- 使用固定发布签名，可覆盖安装已有同签名 ColorOS 版。API 101 框架更新后请重载蓝牙与快速设备连接作用域，以同步代码和图片资源；API 102 框架支持热重载。
+
+## 1.9.0.1
+
+> 版本号改为“上游版本.修订号”，ColorOS 标识已在软件名中；安装包为 `HuaweiPods-ColorOS-<版本>-release.apk`。
+
+- 同步上游 HuaweiPods 1.9.0：新增 HUAWEI FreeBuds 7。
+- **“我的设备”电量更灵敏**：耳机连接期间每 15 秒在后台刷新一次电量，亮屏时立即刷新，系统界面不再长时间停留在旧电量。
+- **“我的设备”快捷控制**：HuaweiPods 入口下方按机型显示关闭 / 降噪 / 通透切换，以及低时延、佩戴检测开关，状态随耳机同步。
+- **流体云低时延按钮**：支持低时延的型号可在流体云 / 通知卡片上一键开关低时延。
+- **连接卡片电量实时刷新**：快速设备连接卡片显示左耳 / 右耳 / 耳机盒电量与充电标记，卡片显示期间电量变化会同步更新。
+- **系统蓝牙设置**：设备列表显示左右耳电量，详情页出现“耳机设置”并打开 HuaweiPods（需勾选可选作用域 `com.oplus.wirelesssettings`）。
+- **耳机低电量提醒**：耳机未充电时电量降到 20% 和 10% 各提醒一次，可在设置中关闭或发送测试提醒。
+- **佩戴状态**：读取耳机上报的入耳状态并同步给系统。
+- **只保留 ColorOS 适配**：移除小米 / HyperOS 相关的 Hook、作用域、设置项与依赖（超级岛、焦点通知、融合设备中心、小米蓝牙、系统设置详情页），LSPosed 作用域只剩蓝牙、我的设备、快速设备连接与可选的智慧音频。
+- 关于页改为显示本分支维护者，并单独列出上游项目。
 
 ## ColorOS 17 适配与原生系统集成（1.8.3-coloros.1）
 
@@ -57,29 +106,32 @@ HuaweiPods ColorOS 是一个使用独立应用 ID `io.github.artifical0.huaweipo
 | HUAWEI FreeBuds 5i | 扩展支持 | 电量、通透 / 降噪 / 关闭与状态回读、智慧动态 / 轻度 / 均衡 / 深度四档降噪、左右耳双击、佩戴检测、4 种官方音效、高清音质、低时延自动保持与官方配色图片；长按和滑动设置待补充 |
 | HUAWEI FreeBuds SE 4 ANC | 扩展支持 | 电量、通透 / 降噪 / 关闭与状态回读、轻度 / 均衡 / 深度三档降噪、防风噪、4 种官方音效、10 段自定义均衡器、低时延自动保持与官方配色图片；手势设置待补充 |
 | HUAWEI FreeBuds 6i | 扩展支持 | 电量、通透 / 降噪 / 关闭、4 档降噪、通透人声模式、双击 / 三击手势、4 种官方音效、10 段自定义均衡器、低时延自动保持与专属图片 |
+| HUAWEI FreeBuds 6 | 扩展支持，ColorOS 未实测 | 电量、官方图片身份、智慧动态 / 轻度 / 均衡三档降噪与回读，自适应音量、掉落提醒、佩戴检测、盒提示音、已确认音效及低时延回读；不提供通透或深度档 |
 | HUAWEI FreeBuds Pro 3 | 扩展支持 | 电量、三态控制与状态回读、4 档降噪、通透人声模式、长按 / 捏合 / 滑动手势与低时延自动保持 |
 | HUAWEI FreeBuds Pro 4 | 基础支持 | 电量、降噪 / 关闭两态控制；暂不支持降噪状态回读与手势设置 |
 | HUAWEI FreeBuds Pro 5 | 扩展支持 | 电量、三态回读、4 档降噪、通透 / 透传人声 / 智慧动态透传、三击 / 按捏 / 轻滑音量、佩戴检测、自适应音量、头动与语音控制、空间音频、9 种悦彰 / 场景 / AI 音效、10 段自定义均衡器、高清音质、低时延自动保持、双设备连接、开盒提示音与耳塞材质 |
+| HUAWEI FreeBuds 7 | 扩展支持 | 电量与官方图片、三态回读与 3 档降噪、空间音频、双击/三击/捏合/滑动设置、佩戴检测、8 种音效与 10 段均衡器、高清音质、低时延及部分智慧设置；协议由上游在 HyperOS 上实机验证（[验证范围](https://github.com/Artifical0/HuaweiPods-ColorOS/blob/5a72ab50479207c0ff8b087d460f5cdd9c4d36d7/docs/FREEBUDS7_ADAPTATION.md)），ColorOS 上尚待验证 |
 | HUAWEI FreeBuds 7i | 扩展支持 | 电量、通透 / 降噪 / 关闭与状态回读、4 档降噪、双击 / 三击 / 长按 / 滑动音量、佩戴检测、头动控制、空间音频、4 种官方音效、10 段自定义均衡器、高清音质、低时延自动保持、双设备列表管理与官方配色图片 |
 | HUAWEI FreeClip | 扩展支持 | 左右耳与充电盒电量、双击 / 三击手势、佩戴检测、左右耳机自适应、掉落提醒、4 种官方音效和低时延自动保持；不支持传统主动降噪与自定义 EQ |
-| HUAWEI FreeClip 2 | 扩展支持 | 电量、双击 / 三击 / 滑动手势、空间音频、低时延自动保持及部分佩戴和音频设置；不支持传统主动降噪 |
+| HUAWEI FreeClip 2 | 扩展支持 | 电量、双击 / 三击 / 滑动手势、空间音频、低时延自动保持及部分佩戴和音频设置；不支持传统主动降噪；新增点头 / 摇头动作、大音量开关和回读（新增项 ColorOS 未实测） |
+| HUAWEI FreeClip 2 典藏版 | 扩展支持，ColorOS 未实测 | 独立产品身份 / 官方配色图片；复用 FreeClip 2 控制协议，包含头动动作和大音量设置，未获取官方图时为系列示意图 |
 | HUAWEI FreeArc | 扩展支持 | 左右耳与充电盒电量、双击 / 三击 / 按住 / 滑动手势、5 种官方音效、10 段自定义均衡器与官方配色图片；不支持传统主动降噪 |
 | 华为智能眼镜（第一代） | 基础支持 | 左右镜腿电量与系统界面集成；不提供主动降噪 |
 | HUAWEI Eyewear 2 | 基础支持 | 左右镜腿电量、双击 / 滑动手势与低时延自动保持；不提供主动降噪 |
 | HUAWEI Eyewear 3 | 基础支持 | 协议型号识别、左右镜腿电量、系统眼镜分类与官方配色图片；不提供主动降噪 |
 
-表格仅列出当前已接入的能力；未列出的官方功能不代表已经支持，具体表现还会受到耳机固件和 HyperOS 系统组件版本影响。
+表格仅列出当前已接入的能力；未列出的官方功能不代表已经支持，具体表现还会受到耳机固件和 ColorOS 系统组件版本影响。
 
 如需适配其他华为耳机，可提交 Issue 或提供脱敏抓包数据。
 
 ## 主要功能
 
-- 在系统蓝牙详情页显示电量及机型支持的控制项
-- 接入 HyperOS 连接弹窗和超级岛
-- 接入 ColorOS 官方耳机连接弹窗；Android 16+ 可在流体云显示左右耳与充电盒电量
-- 可分别控制锁屏耳机通知与超级岛通知
+- 接入 ColorOS 官方“快速设备连接”弹窗（连接与开盖）；Android 16+ 可在流体云显示左右耳与充电盒电量
+- 左右耳 / 充电盒电量写入 ColorOS 系统耳机电量通道，状态栏、蓝牙设置和“我的设备”可直接显示
+- “我的设备”耳机详情页显示 HuaweiPods 电量与设置入口，并可直接切换降噪或低时延
+- 系统蓝牙设置显示左右耳电量与“耳机设置”入口；耳机低电量时提醒
+- 可分别控制常驻耳机通知与锁屏通知
 - 通知可打开模块弹窗、系统设置或华为智慧音频；模块弹窗可直接切换低时延
-- 接入融合设备中心，并支持已配对设备间流转；已验证的旧版宿主可复用“查找耳机”卡片快速切换低时延
 - 显示左右耳、充电盒或眼镜左右镜腿电量
 - 按机型提供主动降噪、通透模式、降噪等级和手势设置
 - 直接从蓝牙协议读取现代型号的精确资源身份，并从华为官方 CDN 校验、缓存对应机型与配色图片
@@ -90,7 +142,7 @@ HuaweiPods ColorOS 是一个使用独立应用 ID `io.github.artifical0.huaweipo
 
 ## 使用要求
 
-- 小米 / Redmi HyperOS，或 OPPO / OnePlus / realme ColorOS 设备
+- OPPO / OnePlus / realme ColorOS 设备（ColorOS 16 / 17）
 - Android 15 及以上
 - LSPosed API 101 及以上（API 102 框架额外支持覆盖安装后自动热重载）
 - 表中任一已集成型号
@@ -101,25 +153,25 @@ HuaweiPods ColorOS 是一个使用独立应用 ID `io.github.artifical0.huaweipo
 2. 在 LSPosed 中启用 HuaweiPods。
 3. 按系统勾选作用域：
 
-   - ColorOS：`com.android.bluetooth`、`com.heytap.mydevices`、`com.heytap.accessory`（`com.heytap.accessory` 用于系统“快速设备连接”官方弹窗；可选勾选 `com.android.settings`，用于打开通用蓝牙详情页）
-   - HyperOS 完整集成：`com.android.bluetooth`、`com.android.settings`、`com.milink.service`、`com.xiaomi.bluetooth`
+   - 必选：`com.android.bluetooth`、`com.heytap.mydevices`、`com.heytap.accessory`（`com.heytap.accessory` 用于系统“快速设备连接”官方弹窗）
+   - 可选：`com.oplus.wirelesssettings`（系统蓝牙设置中的耳机电量与“耳机设置”入口）
    - 可选：`com.huawei.smartaudio`（已安装华为智慧音频时，用于 FreeClip 2 空间音频与自定义音效同步）
 
 4. 在 HuaweiPods 内重启相关作用域，或重启手机。
 5. ColorOS 16+ 首次使用流体云时，在 HuaweiPods 设置中点击“ColorOS 流体云”，并在系统通知设置开启“实时提醒”。
-6. 连接设备后，即可在 HuaweiPods 查看已接入能力；HyperOS 还可使用蓝牙详情页、超级岛或融合设备中心。现代型号会直接读取设备标识；改名设备或旧协议型号识别失败时，再在 HuaweiPods 中选择一次真实型号。
+6. 连接设备后，即可在 HuaweiPods、“我的设备”与流体云中查看已接入能力。现代型号会直接读取设备标识；改名设备或旧协议型号识别失败时，再在 HuaweiPods 中选择一次真实型号。
 
 正式版不需要安装或运行华为智慧音频来获取图片：现代型号由蓝牙协议直接确认机型与配色，旧协议型号可在图片设置中检索华为官方配色并手动确认。下载失败时始终回退到已有缓存或内置图，不会猜测默认配色。
 
-融合设备中心低时延卡片只在已验证的旧版宿主中启用，并可在 HuaweiPods 设置中关闭；HyperOS 4 请从模块弹窗或详情页操作。1.8.3 修复了 FreeBuds 6i 等机型在弹窗内写入成功后设置未保存、再次打开又显示关闭的问题。现有协议没有可靠的低时延状态回读，界面显示最近一次成功写入且会在重连时恢复的设置，不代表耳机主动上报的实时状态；耳机端效果仍需实机验证。
+低时延请从模块弹窗或详情页操作。1.8.3 修复了 FreeBuds 6i 等机型在弹窗内写入成功后设置未保存、再次打开又显示关闭的问题。现有协议没有可靠的低时延状态回读，界面显示最近一次成功写入且会在重连时恢复的设置，不代表耳机主动上报的实时状态；耳机端效果仍需实机验证。
 
-更完整的安装说明见 [快速开始](https://github.com/Artifical0/HuaweiPods-ColorOS/blob/main/docs/guide/getting-started.md)。
+更完整的安装说明见 [快速开始](https://github.com/Artifical0/HuaweiPods-ColorOS/blob/5a72ab50479207c0ff8b087d460f5cdd9c4d36d7/docs/guide/getting-started.md)。
 
 ## 适配新型号
 
 未支持型号需要先采集华为智慧音频（`com.huawei.smartaudio`）与耳机之间的真实通信数据。通用协议采集版按设备、噪声与音量、手势、音质、连接和充电盒等类别引导单变量操作；只负责记录，不代表该型号已经适配。
 
-请勿直接公开包含设备地址、账号或其他个人信息的原始采集文件。提交前请检查并脱敏，完整流程见 [华为耳机协议采集指南](https://github.com/Artifical0/HuaweiPods-ColorOS/blob/main/docs/DEBUG_CAPTURE_GUIDE.md)。
+请勿直接公开包含设备地址、账号或其他个人信息的原始采集文件。提交前请检查并脱敏，完整流程见 [华为耳机协议采集指南](https://github.com/Artifical0/HuaweiPods-ColorOS/blob/5a72ab50479207c0ff8b087d460f5cdd9c4d36d7/docs/DEBUG_CAPTURE_GUIDE.md)。
 
 可复现问题请提交至 [GitHub Issues](https://github.com/Artifical0/HuaweiPods-ColorOS/issues)。
 
