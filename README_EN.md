@@ -12,7 +12,7 @@
 
 **English** | **[Simplified Chinese](README.md)**
 
-[Releases](https://github.com/Artifical0/HuaweiPods-ColorOS/releases) · [Documentation](https://huaweipods.npiter.de/) · [Support the project](https://github.com/Artifical0/HuaweiPods-ColorOS/blob/5a72ab50479207c0ff8b087d460f5cdd9c4d36d7/docs/sponsor/index.md) · [Report an issue](https://github.com/Artifical0/HuaweiPods-ColorOS/issues)
+[Releases](https://github.com/Artifical0/HuaweiPods-ColorOS/releases) · [Documentation](https://huaweipods.npiter.de/) · [Support the project](https://github.com/Artifical0/HuaweiPods-ColorOS/blob/5a72ab50479207c0ff8b087d460f5cdd9c4d36d7/docs/sponsor/index.md) · [Report an issue](https://github.com/Artifical0/HuaweiPods-ColorOS/issues) · [Telegram updates](https://t.me/ByteJuno)
 
 </div>
 
