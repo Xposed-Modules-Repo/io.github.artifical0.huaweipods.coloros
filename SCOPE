@@ -1,7 +1,7 @@
 [
   "com.android.bluetooth",
+  "com.huawei.smartaudio",
   "com.heytap.mydevices",
   "com.heytap.accessory",
-  "com.huawei.smartaudio",
   "com.oplus.wirelesssettings"
 ]

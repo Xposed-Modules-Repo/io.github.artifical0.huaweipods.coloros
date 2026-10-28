@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/public/huaweipods-logo.png" width="120" height="120" style="border-radius: 24px;" alt="HuaweiPods Icon"/>
+<img src="https://raw.githubusercontent.com/ByteJuno/HuaweiPods-ColorOS/f2e36f91749df9e4af7fb7a7ecd5d50dba9ccc94/docs/public/huaweipods-logo.png" width="120" height="120" style="border-radius: 24px;" alt="HuaweiPods Icon"/>
 
 # HuaweiPods ColorOS
 
@@ -12,7 +12,7 @@
 
 **English** | **[Simplified Chinese](README.md)**
 
-[Releases](https://github.com/ByteJuno/HuaweiPods-ColorOS/releases) · [Documentation](https://huaweipods.npiter.de/) · [Support the project](https://github.com/ByteJuno/HuaweiPods-ColorOS/blob/5a72ab50479207c0ff8b087d460f5cdd9c4d36d7/docs/sponsor/index.md) · [Report an issue](https://github.com/ByteJuno/HuaweiPods-ColorOS/issues) · [Telegram updates](https://t.me/ByteJuno)
+[Releases](https://github.com/ByteJuno/HuaweiPods-ColorOS/releases) · [Documentation](https://huaweipods.npiter.de/) · [Support the project](https://github.com/ByteJuno/HuaweiPods-ColorOS/blob/f2e36f91749df9e4af7fb7a7ecd5d50dba9ccc94/docs/sponsor/index.md) · [Report an issue](https://github.com/ByteJuno/HuaweiPods-ColorOS/issues) · [Telegram updates](https://t.me/ByteJuno)
 
 </div>
 
@@ -20,17 +20,26 @@ HuaweiPods ColorOS is an Android 15+ Xposed module with the independent applicat
 
 > Starting with 1.9.0.1 this fork targets ColorOS only. The upstream Xiaomi / HyperOS integrations (system Bluetooth detail page, Super Island, Fusion Device Center, and so on) have been removed; HyperOS users should use upstream [HuaweiPods](https://github.com/Nshpiter/HuaweiPods).
 
-> The My Devices entry supports both the ColorOS 16.1 (`com.heytap.mydevices` 17.4.15) and ColorOS 17 (17.25.10) detail pages. The ColorOS 17 work was checked statically against OnePlus PLK110 `PLK110_17.0.0.102(CN01)` firmware and still needs on-device verification. Private hosts change between system updates; unknown builds fall back to the stock pages while keeping the module UI, Live Alerts, and the standard Bluetooth detail page.
+> The My Devices entry supports both the ColorOS 16.1 (`com.heytap.mydevices` 17.4.15) and ColorOS 17 (17.25.10) detail pages. Images, battery summaries and recovery after updating the module with the detail sheet open were verified on OnePlus PLK110 `PLK110_17.0.0.105(CN01)` / My Devices 17.25.10 / first-generation FreeClip. Other earphones, ROMs and lid-close/reopen scenarios are outside this verification. Unknown host layouts retain their stock rendering.
 
-The unified build supports the 19 models below in one APK. Model-specific test APKs are no longer distributed; newly added models still need ColorOS device testing.
+The unified build supports the 20 models below in one APK. Model-specific test APKs are no longer distributed; newly added models still need ColorOS device testing.
 
-## 1.9.1.1 (current stable release)
+## 1.9.2.1 (current stable release)
+
+- Selectively ports upstream 1.9.2: adds a separate FreeBuds 4 identity with shared 4E-family basic controls, and corrects FreeBuds 7i fixed/head-tracking spatial-audio mapping.
+- FreeClip 2 settings use device readback and refresh on resume. Strict TLV parsing, device/page session isolation and confirmed low-latency policy commits prevent stale or unconfirmed writes from changing saved settings.
+- Fixes generic headset images in Device Space home cards and detail sheets, preserves custom names and existing color images, and recovers an already-open dialog after module hot reload.
+- Reduces fallback icon refreshes after the connection settles. Updates GitHub identity and update links to ByteJuno, bundles the current maintainer avatar, and adds a [Telegram update-channel entry](https://t.me/ByteJuno) to About.
+- 629 unit tests passed; Lint has no errors, Release assembly and Android-test compilation pass. First-generation FreeClip on PLK110 / ColorOS 17.0.0.105 was checked for the official popup, app and Device Space images, battery, Live Alerts and two in-place detail hot reloads. Lid-close/reopen and other new models were not tested in this round.
+- VersionCode 28 retains the fixed distribution certificate. GitHub and the independent [LSPosed repository](https://github.com/Xposed-Modules-Repo/io.github.artifical0.huaweipods.coloros/releases) distribute the same stable APK. See [release notes and limitations](https://github.com/ByteJuno/HuaweiPods-ColorOS/blob/f2e36f91749df9e4af7fb7a7ecd5d50dba9ccc94/.github/release-notes/1.9.2.1.md).
+
+## 1.9.1.1 (previous stable release)
 
 - Adds FreeBuds 6 model recognition, official image identity, captured ANC levels and a dedicated controls page; keeps FreeBuds 6 distinct from 6i.
 - Adds FreeClip 2 Collector Edition product identity `000173`, separate from ordinary `000167` images. FreeClip 2 gains confirmed nod/shake call actions and noisy-environment volume-boost readback, replacing the incorrect quality-priority label. Bundled family illustrations remain the fallback until official images are available.
 - Routes generic low-latency writes and 6i / SE 4 ANC EQ/wind controls through the Bluetooth host. Manual changes invalidate older auto-enable writes and callbacks; outstanding requests are bounded and expire after eight seconds.
 - Preserves ColorOS lifecycle, image isolation and sender checks. No HyperOS private UI or unverified SE 4 ANC adaptive-ANC command is imported. New models and cross-process paths still require real-device testing; no device was installed or restarted in this step.
-- Local verification: 577 unit tests passed, Lint had no errors, and Release assembly plus Android-test compilation succeeded. VersionCode 27 uses the existing fixed distribution certificate, not the local Debug certificate. This is published to the stable channel on GitHub and the independent LSPosed module repository; new models still need ColorOS device testing. See the [release notes and limitations](https://github.com/ByteJuno/HuaweiPods-ColorOS/blob/5a72ab50479207c0ff8b087d460f5cdd9c4d36d7/.github/release-notes/1.9.1.1.md).
+- Local verification: 577 unit tests passed, Lint had no errors, and Release assembly plus Android-test compilation succeeded. VersionCode 27 uses the existing fixed distribution certificate, not the local Debug certificate. This is published to the stable channel on GitHub and the independent LSPosed module repository; new models still need ColorOS device testing. See the [release notes and limitations](https://github.com/ByteJuno/HuaweiPods-ColorOS/blob/f2e36f91749df9e4af7fb7a7ecd5d50dba9ccc94/.github/release-notes/1.9.1.1.md).
 
 ## 1.9.0.1
 
@@ -71,6 +80,7 @@ Versions from 1.8.1-coloros.2 use a stable release key and support in-place upda
 | --- | --- | --- |
 | HUAWEI FreeBuds 3 | Stable | Battery, ANC on/off, nine-position spatial ANC dial, double-tap gestures, and system UI integration |
 | HUAWEI FreeBuds 4E | Extended support | Battery, ANC/off with Light/Balanced levels and readback, left/right double-tap and press-and-hold, wear detection, fixed swipe-volume guidance, three official sound presets, and official color images |
+| HUAWEI FreeBuds 4 | Extended support, not device-tested on ColorOS | Separate model and image identity with shared 4E-family battery and basic controls; device acceptance is pending |
 | HUAWEI FreeBuds 5 | Extended support | Battery, ANC/off readback, Smart/Light/Balanced ANC levels, wear detection, four official sound presets, high-quality audio and low-latency auto-apply; gesture settings remain pending |
 | HUAWEI FreeBuds 5i | Extended support | Battery, transparency/ANC/off readback, Smart/Light/Balanced/Deep ANC levels, left/right double-tap, wear detection, four official sound presets, high-quality audio, low-latency auto-apply, and official color images; long-press and swipe settings remain pending |
 | HUAWEI FreeBuds SE 4 ANC | Extended support | Battery, transparency/ANC/off readback, Light/Balanced/Deep ANC levels, wind-noise reduction, four official sound presets, a 10-band custom EQ, low-latency auto-apply, and official color images; gesture settings remain pending |
@@ -79,7 +89,7 @@ Versions from 1.8.1-coloros.2 use a stable release key and support in-place upda
 | HUAWEI FreeBuds Pro 3 | Extended support | Battery, three-mode control and readback, four ANC levels, voice transparency, long-press/pinch/swipe gestures, and low-latency auto-apply |
 | HUAWEI FreeBuds Pro 4 | Basic support | Battery and ANC/off; no verified ANC state readback or gesture settings |
 | HUAWEI FreeBuds Pro 5 | Extended support | Battery, three-mode readback, four ANC levels, standard/voice/adaptive transparency, triple-tap/pinch/swipe-volume gestures, wear detection, adaptive volume, head-motion and voice controls, spatial audio, nine Yuezhang/scene/AI sound presets, a 10-band custom EQ, high-quality audio, low-latency auto-apply, dual-device connection, case-open sound, and ear-tip material |
-| HUAWEI FreeBuds 7 | Extended support | Battery and official images, three ANC levels with readback, spatial audio, double/triple-tap, pinch and swipe settings, wear detection, eight sound effects, a 10-band EQ, high-quality audio, low latency, and selected smart settings; protocol verified upstream on HyperOS ([validation scope](https://github.com/ByteJuno/HuaweiPods-ColorOS/blob/5a72ab50479207c0ff8b087d460f5cdd9c4d36d7/docs/FREEBUDS7_ADAPTATION.md), Chinese), not yet on ColorOS |
+| HUAWEI FreeBuds 7 | Extended support | Battery and official images, three ANC levels with readback, spatial audio, double/triple-tap, pinch and swipe settings, wear detection, eight sound effects, a 10-band EQ, high-quality audio, low latency, and selected smart settings; protocol verified upstream on HyperOS ([validation scope](https://github.com/ByteJuno/HuaweiPods-ColorOS/blob/f2e36f91749df9e4af7fb7a7ecd5d50dba9ccc94/docs/FREEBUDS7_ADAPTATION.md), Chinese), not yet on ColorOS |
 | HUAWEI FreeBuds 7i | Extended support | Battery, transparency/ANC/off readback, four ANC levels, double/triple-tap, long-press and swipe-volume gestures, wear detection, head-motion control, spatial audio, four sound presets, a 10-band custom EQ, high-quality audio, low-latency auto-apply, dual-device list management, and official color images |
 | HUAWEI FreeClip | Extended support | Left/right/case battery, double/triple-tap gestures, wear detection, adaptive left/right earbuds, drop reminder, four official sound presets, and low-latency auto-apply; no traditional ANC or custom EQ |
 | HUAWEI FreeClip 2 | Extended support | Battery, double/triple-tap and swipe gestures, spatial audio, low-latency auto-apply, and selected wearing/audio settings; new nod/shake actions and noisy-environment volume-boost readback still need ColorOS device testing; no traditional ANC |
